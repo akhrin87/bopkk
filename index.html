@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1300" />
+    <meta name="HandheldFriendly" content="true" />
+    <title>Update Data Pengajuan BO PKK - Kecamatan Semarang Timur</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --merah: #c8202e;
+        --merah-tua: #8f1420;
+        --pink-muda: #f2d9db;
+        --krem: #f7edc9;
+        --abu-teks: #333333;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Poppins", Arial, sans-serif;
+        color: var(--abu-teks);
+        min-height: 100vh;
+        background:
+          linear-gradient(rgba(20, 15, 15, 0.55), rgba(15, 10, 10, 0.75)),
+          url("assets/bg-gedung.jpg") center 25% / cover no-repeat fixed;
+      }
+      .wrap {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 16px;
+      }
+
+      /* HEADER */
+      .header {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        background: linear-gradient(
+          120deg,
+          var(--merah-tua) 0%,
+          var(--merah) 60%
+        );
+        color: #fff;
+        padding: 20px 26px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+      }
+      .header-photo {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 340px;
+        background:
+          linear-gradient(
+            90deg,
+            var(--merah) 0%,
+            rgba(200, 32, 46, 0.35) 55%,
+            rgba(0, 0, 0, 0.15) 100%
+          ),
+          url("assets/bg-gedung.jpg") center 25% / cover no-repeat;
+        opacity: 0.85;
+      }
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        z-index: 2;
+      }
+      .header-left img {
+        height: 58px;
+      }
+      .header-title h1 {
+        margin: 0;
+        font-size: 21px;
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 1.25;
+      }
+      .header-title .sub {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--krem);
+        text-transform: uppercase;
+      }
+      .pill {
+        display: inline-block;
+        margin-top: 6px;
+        background: rgba(0, 0, 0, 0.28);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 20px;
+        padding: 3px 14px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+      .header-right {
+        z-index: 2;
+        background: var(--krem);
+        color: #222;
+        border-radius: 12px;
+        padding: 10px 18px;
+        text-align: center;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        min-width: 200px;
+      }
+      .header-right .label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #555;
+        margin-bottom: 2px;
+      }
+      .header-right .tanggal {
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--merah-tua);
+      }
+      .header-right .jam {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--merah-tua);
+      }
+
+      /* PANEL + TABLE */
+      .panel {
+        background: #fff;
+        border-radius: 14px;
+        padding: 16px 18px 20px;
+        margin-top: 16px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+      }
+      .panel h3 {
+        margin: 0 0 14px;
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--merah-tua);
+      }
+      .table-wrap {
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 12px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12.5px;
+        background: #fff;
+      }
+      thead th {
+        background: var(--merah);
+        color: #fff;
+        font-weight: 700;
+        text-align: center;
+        padding: 10px 8px;
+        border: 1px solid #d94c57;
+        white-space: nowrap;
+      }
+      tbody td {
+        text-align: center;
+        padding: 8px;
+        border: 1px solid #eee;
+        white-space: nowrap;
+      }
+      tbody td.kelurahan {
+        text-align: left;
+        font-weight: 600;
+      }
+      tbody td.teks {
+        text-align: left;
+        white-space: normal;
+        font-size: 11.5px;
+        min-width: 180px;
+      }
+      tbody tr:nth-child(even) {
+        background: var(--pink-muda);
+      }
+      tbody tr:nth-child(odd) {
+        background: #fdf2f3;
+      }
+      tfoot td {
+        background: #efc4c8;
+        font-weight: 800;
+        text-align: center;
+        padding: 9px 8px;
+        border: 1px solid #d9a3a8;
+        white-space: nowrap;
+      }
+      tfoot td.kelurahan {
+        text-align: left;
+      }
+
+      /* LOADING / ERROR */
+      .loading,
+      .error {
+        text-align: center;
+        padding: 22px 28px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        background: rgba(20, 15, 15, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 12px;
+        max-width: 320px;
+        margin: 120px auto 0;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+      .error {
+        background: rgba(143, 20, 32, 0.85);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+      .spinner {
+        width: 18px;
+        height: 18px;
+        border: 3px solid rgba(255, 255, 255, 0.35);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        flex-shrink: 0;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .footer-note {
+        text-align: center;
+        color: #ddd;
+        font-size: 11px;
+        padding: 20px 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap" id="app" style="display: none">
+      <div class="header">
+        <div class="header-photo"></div>
+        <div class="header-left">
+          <img src="assets/logo-pemkot.png" alt="Logo Pemkot Semarang" />
+          <div class="header-title">
+            <h1>Update Data Pengajuan<br />Bantuan Operasional PKK</h1>
+            <div class="sub">Kecamatan Semarang Timur</div>
+            <div class="pill">T.A 2026</div>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="label">Data per</div>
+          <div class="tanggal" id="tanggalUpdate">-</div>
+          <div class="jam" id="jamUpdate"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>📋 Ringkasan Data per Kelurahan</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>NO</th>
+                <th>KELURAHAN</th>
+                <th>RW</th>
+                <th>RT</th>
+                <th>JUMLAH</th>
+                <th>PAGU RT (Rp)</th>
+                <th>PAGU RW (Rp)</th>
+                <th>TOTAL PAGU (Rp)</th>
+                <th>REALISASI (Rp)</th>
+                <th>% REALISASI</th>
+                <th>TIDAK PENGAJUAN<br />BO PKK</th>
+                <th>KETERANGAN</th>
+              </tr>
+            </thead>
+            <tbody id="bopBody"></tbody>
+            <tfoot id="bopFoot"></tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div class="footer-note">
+        Kecamatan Semarang Timur &middot; Pemerintah Kota Semarang
+      </div>
+    </div>
+
+    <div class="loading" id="loadingMsg">
+      <span class="spinner"></span><span>Memuat data...</span>
+    </div>
+
+    <script>
+      // Ganti dengan Web App URL hasil deploy Apps Script BO PKK
+      const API_URL =
+        "https://script.google.com/macros/s/AKfycbzy9w16UnBFQXL0_mfnO_QcMf18N5rRCevvUeYrZa8g6LYLiDmb1ohXxgC47plu9NpjcA/exec";
+
+      // Standar pagu BO PKK per unit.
+      // Dipakai otomatis jika kolom PAGU RT / PAGU RW di sheet masih kosong.
+      const PAGU_PER_RT = 3000000;
+      const PAGU_PER_RW = 3600000;
+
+      function num(v) {
+        if (typeof v === "number") return isNaN(v) ? 0 : v;
+        if (v === null || v === undefined || v === "") return 0;
+        // dukung teks seperti "1.000.000" atau "1.000.000,50"
+        const n = Number(String(v).replace(/\./g, "").replace(",", "."));
+        return isNaN(n) ? 0 : n;
+      }
+
+      function rupiah(n) {
+        return n ? Math.round(n).toLocaleString("id-ID") : "0";
+      }
+
+      function pct(part, total) {
+        return total ? (part / total) * 100 : 0;
+      }
+
+      async function loadData() {
+        try {
+          const res = await fetch(API_URL);
+          const json = await res.json();
+          render(json.data || [], json.last_updated || "-");
+        } catch (err) {
+          const el = document.getElementById("loadingMsg");
+          el.textContent = "Gagal memuat data. Periksa koneksi atau URL API.";
+          el.className = "error";
+          console.error(err);
+        }
+      }
+
+      function render(rows, lastUpdated) {
+        const data = rows.map((r) => {
+          const rw = num(r.RW);
+          const rt = num(r.RT);
+          const paguRT = num(r["PAGU RT"]) || rt * PAGU_PER_RT;
+          const paguRW = num(r["PAGU RW"]) || rw * PAGU_PER_RW;
+          return {
+            no: r.NO ?? "",
+            kelurahan: r.KELURAHAN ?? "",
+            rw,
+            rt,
+            jumlah: num(r.JUMLAH) || rw + rt,
+            paguRT,
+            paguRW,
+            paguTotal: paguRT + paguRW,
+            realisasi: num(r.REALISASI),
+            tidakPengajuan: r["TIDAK PENGAJUAN BO PKK"] ?? "",
+            keterangan: r.KETERANGAN ?? "",
+          };
+        });
+
+        // timestamp header
+        const parts = String(lastUpdated).split(", ");
+        document.getElementById("tanggalUpdate").textContent =
+          parts[0] || lastUpdated;
+        document.getElementById("jamUpdate").textContent = parts[1]
+          ? "🕐 " + parts[1]
+          : "";
+
+        // body tabel
+        document.getElementById("bopBody").innerHTML = data
+          .map(
+            (d) => `
+          <tr>
+            <td>${d.no}</td>
+            <td class="kelurahan">${d.kelurahan}</td>
+            <td>${d.rw}</td>
+            <td>${d.rt}</td>
+            <td>${d.jumlah}</td>
+            <td>${rupiah(d.paguRT)}</td>
+            <td>${rupiah(d.paguRW)}</td>
+            <td>${rupiah(d.paguTotal)}</td>
+            <td>${rupiah(d.realisasi)}</td>
+            <td>${pct(d.realisasi, d.paguTotal).toFixed(1)}%</td>
+            <td class="teks">${d.tidakPengajuan}</td>
+            <td class="teks">${d.keterangan}</td>
+          </tr>`,
+          )
+          .join("");
+
+        // total
+        const sum = (k) => data.reduce((s, d) => s + d[k], 0);
+        const totalPagu = sum("paguTotal");
+        const totalReal = sum("realisasi");
+        document.getElementById("bopFoot").innerHTML = `
+          <tr>
+            <td colspan="2" class="kelurahan">JUMLAH</td>
+            <td>${sum("rw")}</td>
+            <td>${sum("rt")}</td>
+            <td>${sum("jumlah")}</td>
+            <td>${rupiah(sum("paguRT"))}</td>
+            <td>${rupiah(sum("paguRW"))}</td>
+            <td>${rupiah(totalPagu)}</td>
+            <td>${rupiah(totalReal)}</td>
+            <td>${pct(totalReal, totalPagu).toFixed(1)}%</td>
+            <td></td>
+            <td></td>
+          </tr>`;
+
+        document.getElementById("loadingMsg").style.display = "none";
+        document.getElementById("app").style.display = "block";
+      }
+
+      loadData();
+      setInterval(loadData, 5 * 60 * 1000);
+    </script>
+  </body>
+</html>
