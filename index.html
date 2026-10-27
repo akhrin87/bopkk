@@ -162,13 +162,13 @@
         color: #fff;
         font-weight: 700;
         text-align: center;
-        padding: 10px 8px;
+        padding: 10px 6px;
         border: 1px solid #d94c57;
-        white-space: nowrap;
+        font-size: 12px;
       }
       tbody td {
         text-align: center;
-        padding: 8px;
+        padding: 8px 6px;
         border: 1px solid #eee;
         white-space: nowrap;
       }
@@ -180,7 +180,7 @@
         text-align: left;
         white-space: normal;
         font-size: 11.5px;
-        min-width: 180px;
+        min-width: 120px;
       }
       tbody tr:nth-child(even) {
         background: var(--pink-muda);
@@ -273,13 +273,14 @@
               <tr>
                 <th>NO</th>
                 <th>KELURAHAN</th>
-                <th>RW</th>
                 <th>RT</th>
+                <th>RW</th>
                 <th>JUMLAH</th>
                 <th>PAGU RT (Rp)</th>
                 <th>PAGU RW (Rp)</th>
                 <th>REALISASI RT (Rp)</th>
                 <th>REALISASI RW (Rp)</th>
+                <th>TOTAL REALISASI (Rp)</th>
                 <th>% RT</th>
                 <th>% RW</th>
                 <th>TIDAK PENGAJUAN<br />BO PKK</th>
@@ -342,7 +343,8 @@
 
       function render(rows, lastUpdated) {
         // kolom KETERANGAN hanya ditampilkan jika ada di sheet
-        const hasKet = rows.some((r) => "KETERANGAN" in r);
+        const ketKey = (r) => Object.keys(r).find((k) => k.startsWith("KET"));
+        const hasKet = rows.some((r) => ketKey(r));
         document.getElementById("thKet").style.display = hasKet ? "" : "none";
 
         const data = rows.map((r) => {
@@ -360,8 +362,9 @@
             paguRW,
             realisasiRT: num(r["REALISASI RT"]),
             realisasiRW: num(r["REALISASI RW"]),
+            realisasiTotal: num(r["REALISASI RT"]) + num(r["REALISASI RW"]),
             tidakPengajuan: r["TIDAK PENGAJUAN BO PKK"] ?? "",
-            keterangan: r.KETERANGAN ?? "",
+            keterangan: r[ketKey(r)] ?? "",
           };
         });
 
@@ -380,13 +383,14 @@
           <tr>
             <td>${d.no}</td>
             <td class="kelurahan">${d.kelurahan}</td>
-            <td>${d.rw}</td>
             <td>${d.rt}</td>
+            <td>${d.rw}</td>
             <td>${d.jumlah}</td>
             <td>${rupiah(d.paguRT)}</td>
             <td>${rupiah(d.paguRW)}</td>
             <td>${rupiah(d.realisasiRT)}</td>
             <td>${rupiah(d.realisasiRW)}</td>
+            <td style="font-weight:700;">${rupiah(d.realisasiTotal)}</td>
             <td>${pct(d.realisasiRT, d.paguRT).toFixed(1)}%</td>
             <td>${pct(d.realisasiRW, d.paguRW).toFixed(1)}%</td>
             <td class="teks">${d.tidakPengajuan}</td>
@@ -400,13 +404,14 @@
         document.getElementById("bopFoot").innerHTML = `
           <tr>
             <td colspan="2" class="kelurahan">JUMLAH</td>
-            <td>${sum("rw")}</td>
             <td>${sum("rt")}</td>
+            <td>${sum("rw")}</td>
             <td>${sum("jumlah")}</td>
             <td>${rupiah(sum("paguRT"))}</td>
             <td>${rupiah(sum("paguRW"))}</td>
             <td>${rupiah(sum("realisasiRT"))}</td>
             <td>${rupiah(sum("realisasiRW"))}</td>
+            <td>${rupiah(sum("realisasiTotal"))}</td>
             <td>${pct(sum("realisasiRT"), sum("paguRT")).toFixed(1)}%</td>
             <td>${pct(sum("realisasiRW"), sum("paguRW")).toFixed(1)}%</td>
             <td></td>
