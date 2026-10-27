@@ -278,11 +278,12 @@
                 <th>JUMLAH</th>
                 <th>PAGU RT (Rp)</th>
                 <th>PAGU RW (Rp)</th>
-                <th>TOTAL PAGU (Rp)</th>
-                <th>REALISASI (Rp)</th>
-                <th>% REALISASI</th>
+                <th>REALISASI RT (Rp)</th>
+                <th>REALISASI RW (Rp)</th>
+                <th>% RT</th>
+                <th>% RW</th>
                 <th>TIDAK PENGAJUAN<br />BO PKK</th>
-                <th>KETERANGAN</th>
+                <th id="thKet">KETERANGAN</th>
               </tr>
             </thead>
             <tbody id="bopBody"></tbody>
@@ -340,6 +341,10 @@
       }
 
       function render(rows, lastUpdated) {
+        // kolom KETERANGAN hanya ditampilkan jika ada di sheet
+        const hasKet = rows.some((r) => "KETERANGAN" in r);
+        document.getElementById("thKet").style.display = hasKet ? "" : "none";
+
         const data = rows.map((r) => {
           const rw = num(r.RW);
           const rt = num(r.RT);
@@ -353,8 +358,8 @@
             jumlah: num(r.JUMLAH) || rw + rt,
             paguRT,
             paguRW,
-            paguTotal: paguRT + paguRW,
-            realisasi: num(r.REALISASI),
+            realisasiRT: num(r["REALISASI RT"]),
+            realisasiRW: num(r["REALISASI RW"]),
             tidakPengajuan: r["TIDAK PENGAJUAN BO PKK"] ?? "",
             keterangan: r.KETERANGAN ?? "",
           };
@@ -380,19 +385,18 @@
             <td>${d.jumlah}</td>
             <td>${rupiah(d.paguRT)}</td>
             <td>${rupiah(d.paguRW)}</td>
-            <td>${rupiah(d.paguTotal)}</td>
-            <td>${rupiah(d.realisasi)}</td>
-            <td>${pct(d.realisasi, d.paguTotal).toFixed(1)}%</td>
+            <td>${rupiah(d.realisasiRT)}</td>
+            <td>${rupiah(d.realisasiRW)}</td>
+            <td>${pct(d.realisasiRT, d.paguRT).toFixed(1)}%</td>
+            <td>${pct(d.realisasiRW, d.paguRW).toFixed(1)}%</td>
             <td class="teks">${d.tidakPengajuan}</td>
-            <td class="teks">${d.keterangan}</td>
+            ${hasKet ? `<td class="teks">${d.keterangan}</td>` : ""}
           </tr>`,
           )
           .join("");
 
-        // total
+        // total per kolom
         const sum = (k) => data.reduce((s, d) => s + d[k], 0);
-        const totalPagu = sum("paguTotal");
-        const totalReal = sum("realisasi");
         document.getElementById("bopFoot").innerHTML = `
           <tr>
             <td colspan="2" class="kelurahan">JUMLAH</td>
@@ -401,11 +405,12 @@
             <td>${sum("jumlah")}</td>
             <td>${rupiah(sum("paguRT"))}</td>
             <td>${rupiah(sum("paguRW"))}</td>
-            <td>${rupiah(totalPagu)}</td>
-            <td>${rupiah(totalReal)}</td>
-            <td>${pct(totalReal, totalPagu).toFixed(1)}%</td>
+            <td>${rupiah(sum("realisasiRT"))}</td>
+            <td>${rupiah(sum("realisasiRW"))}</td>
+            <td>${pct(sum("realisasiRT"), sum("paguRT")).toFixed(1)}%</td>
+            <td>${pct(sum("realisasiRW"), sum("paguRW")).toFixed(1)}%</td>
             <td></td>
-            <td></td>
+            ${hasKet ? "<td></td>" : ""}
           </tr>`;
 
         document.getElementById("loadingMsg").style.display = "none";
